@@ -19,7 +19,7 @@ final class MyCell: UICollectionViewCell {
             string: heading,
             attributes: self.headingAttributes)
         heading.append(.init(
-            string: " 10:00",
+            string: " 10:00 (\(index))",
             attributes: [.font: UIFont.preferredFont(forTextStyle: .footnote)]))
         
         self.headingLabel.attributedText = heading
@@ -49,6 +49,7 @@ final class MyCell: UICollectionViewCell {
             self.headingLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 8),
             self.headingLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -8),
          ])
+        self.headingLabel.setContentHuggingPriority(.required, for: .vertical)
         
         self.contentView.addSubview(self.bodyLabel)
         self.bodyLabel.translatesAutoresizingMaskIntoConstraints = false

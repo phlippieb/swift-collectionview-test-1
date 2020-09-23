@@ -7,5 +7,6 @@ target 'Test_CollectionCellLayout' do
 
   # Pods for Test_CollectionCellLayout
   pod 'LoremIpsum'
+  pod 'PHBStackLayout'
 
 end
