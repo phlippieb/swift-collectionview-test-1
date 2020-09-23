@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PureLayout
 
 final class MyCell: UICollectionViewCell {
     static let reuseId = "MyCell"
@@ -41,49 +42,31 @@ final class MyCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        self.innerContentView.backgroundColor = .systemGray4
-        
         self.contentView.addSubview(self.imageView)
-        self.imageView.translatesAutoresizingMaskIntoConstraints = false
         self.imageView.layer.cornerRadius = 18
         self.imageView.layer.masksToBounds = true
         
         self.contentView.addSubview(self.headingLabel)
-        self.headingLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        
         self.contentView.addSubview(self.innerContentView)
-        self.innerContentView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        self.contentView.addSubview(self.bodyLabel)
         self.innerContentView.addSubview(self.bodyLabel)
-        self.bodyLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            self.imageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
-            self.imageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 8),
-            self.imageView.widthAnchor.constraint(equalToConstant: 36),
-            self.imageView.heightAnchor.constraint(equalToConstant: 36),
-
-            // This line works at first, but causes "unable to satisfy constraint" bugs when showing the "keyboard".
-            // It is NOT fixed by invalidating the collection view layout, nor by overriding preferredLayoutAttributesFitting
-            self.imageView.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -8),
-            
-            self.headingLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
-            self.headingLabel.leftAnchor.constraint(equalTo: self.imageView.rightAnchor, constant: 8),
-            self.headingLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -8),
-    
-            self.innerContentView.topAnchor.constraint(equalTo: self.headingLabel.bottomAnchor, constant: 8),
-            self.innerContentView.leftAnchor.constraint(equalTo: self.imageView.rightAnchor, constant: 8),
-            self.innerContentView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -8),
-            self.innerContentView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
-            
-            self.bodyLabel.topAnchor.constraint(equalTo: self.innerContentView.topAnchor),
-            self.bodyLabel.leftAnchor.constraint(equalTo: self.innerContentView.leftAnchor),
-            self.bodyLabel.rightAnchor.constraint(equalTo: self.innerContentView.rightAnchor),
-            self.bodyLabel.bottomAnchor.constraint(equalTo: self.innerContentView.bottomAnchor)
-         ])
+        self.imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
+        self.imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 8)
+        self.imageView.autoSetDimensions(to: .init(width: 36, height: 36))
+        // This line works at first, but causes "unable to satisfy constraint" bugs when showing the "keyboard".
+        // It is NOT fixed by invalidating the collection view layout, nor by overriding preferredLayoutAttributesFitting
+//        self.imageView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8, relation: .greaterThanOrEqual)
+        
+        self.headingLabel.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
+        self.headingLabel.autoPinEdge(.left, to: .right, of: self.imageView, withOffset: 8)
+        self.headingLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 8)
+        
+        self.innerContentView.autoPinEdge(.top, to: .bottom, of: self.headingLabel)
+        self.innerContentView.autoPinEdge(.left, to: .right, of: self.imageView, withOffset: 8)
+        self.innerContentView.autoPinEdge(toSuperviewEdge: .right, withInset: 8)
+        self.innerContentView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        
+        self.bodyLabel.autoPinEdgesToSuperviewMargins()
     }
     
     required init?(coder: NSCoder) {
