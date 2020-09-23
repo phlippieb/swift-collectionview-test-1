@@ -7,6 +7,7 @@
 
 import UIKit
 import PHBStackLayout
+import PureLayout
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
@@ -48,22 +49,17 @@ class ViewController: UIViewController {
     /// Setup layout using a stack layout
     private func setupLayout2() {
         let content = StackLayout.rows(alignment: .fill, of: [
-            .view(self.button),
             .view(self.collectionView),
+            .view(self.button),
             .view(self.keyboard)
         ]).view
         
         self.view.addSubview(content)
-        content.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            content.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            content.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            content.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            content.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            
-            self.keyboard.heightAnchor.constraint(equalToConstant: 308),
-        ])
+        content.autoPinEdge(toSuperviewEdge: .top)
+        content.autoPinEdge(toSuperviewEdge: .left)
+        content.autoPinEdge(toSuperviewEdge: .right)
+        content.autoPinEdge(toSuperviewMargin: .bottom)
+        keyboard.autoSetDimension(.height, toSize: 300)
         
         self.keyboard.isHidden = true
     }
@@ -71,7 +67,7 @@ class ViewController: UIViewController {
     @objc func onButton() {
         self.keyboard.isHidden = !self.keyboard.isHidden
         
-        self.collectionView.collectionViewLayout.invalidateLayout()
+//        self.collectionView.collectionViewLayout.invalidateLayout()
         self.view.setNeedsLayout()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()

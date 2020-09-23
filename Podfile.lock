@@ -3,22 +3,26 @@ PODS:
   - PHBNonInteractableViews (1.0.0)
   - PHBStackLayout (1.0.2):
     - PHBNonInteractableViews (~> 1.0)
+  - PureLayout (3.1.6)
 
 DEPENDENCIES:
   - LoremIpsum
   - PHBStackLayout
+  - PureLayout
 
 SPEC REPOS:
   trunk:
     - LoremIpsum
     - PHBNonInteractableViews
     - PHBStackLayout
+    - PureLayout
 
 SPEC CHECKSUMS:
   LoremIpsum: 25837e6f8f9c63471c23140be3e4c6e1b6743c9e
   PHBNonInteractableViews: 5389335a1f08caff6d44a8b2685ac5e9ca147390
   PHBStackLayout: b3f40cad298086782feefa5a1c838ace2589e61e
+  PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d
 
-PODFILE CHECKSUM: d4f191bf0eddf3c43f7daa145aec84ce08be07a6
+PODFILE CHECKSUM: ce061f62c38be66743a82718bf72e81ecbc4944c
 
 COCOAPODS: 1.9.1
