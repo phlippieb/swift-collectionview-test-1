@@ -14,6 +14,9 @@ final class MyDataSource {
         self.dataSource = dataSource
         collectionView.dataSource = dataSource
         collectionView.register(MyCell.self, forCellWithReuseIdentifier: MyCell.reuseId)
+        self.updateUI()
+        
+        self.collectionViewLayout = collectionView.collectionViewLayout
     }
     
     var items: [Item] = [] {
@@ -45,9 +48,11 @@ final class MyDataSource {
             var snapshot = Snapshot()
             snapshot.appendSections([0])
             snapshot.appendItems(self.items.map { $0.id })
-            self.dataSource?.apply(snapshot)            
+            self.dataSource?.apply(snapshot)
         }
     }
+    
+    private var collectionViewLayout: UICollectionViewLayout?
 }
 
 // MARK: Provide cell
@@ -56,7 +61,7 @@ extension MyDataSource {
     private func provideCell(from collectionView: UICollectionView, at indexPath: IndexPath, id: ItemId) -> UICollectionViewCell {
         let item = self.items[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCell.reuseId, for: indexPath) as! MyCell
-        cell.configure(heading: item.heading)
+        cell.configure(index: indexPath.item, heading: item.heading, body: item.body)
         return cell
     }
 }

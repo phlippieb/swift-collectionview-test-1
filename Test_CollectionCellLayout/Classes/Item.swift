@@ -8,11 +8,13 @@
 import Foundation
 
 struct Item {
-    init(heading: String) {
+    init(heading: String, body: String) {
         self.id = .init()
         self.heading = heading
+        self.body = body
     }
     
     let id: UUID
     let heading: String
+    let body: String
 }
