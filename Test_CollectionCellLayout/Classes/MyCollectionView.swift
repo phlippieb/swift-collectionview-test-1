@@ -12,6 +12,8 @@ final class MyCollectionView: UICollectionView {
         let layout = MyCollectionViewLayoutFactory.make()
         super.init(frame: .zero, collectionViewLayout: layout)
         self.backgroundColor = .clear
+        self.transform = .init(scaleX: 1, y: -1)
+        self.contentInsetAdjustmentBehavior = .never
     }
     
     required init?(coder: NSCoder) {

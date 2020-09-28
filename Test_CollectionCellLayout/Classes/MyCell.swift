@@ -41,6 +41,7 @@ final class MyCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.contentView.transform = .init(scaleX: 1, y: -1)
         
         self.contentView.addSubview(self.imageView)
         self.imageView.layer.cornerRadius = 18
