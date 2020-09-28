@@ -12,6 +12,7 @@ final class MyController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Chat"
+        self.view.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)
         
         self.button.setTitle("Toggle keyboard", for: .normal)
         self.button.backgroundColor = .systemBlue
@@ -55,7 +56,7 @@ final class MyController: UIViewController {
         ]).view
         
         self.view.addSubview(content)
-        content.autoPinEdge(toSuperviewEdge: .top)
+        content.autoPinEdge(toSuperviewEdge: .top, withInset: 88) // magic
         content.autoPinEdge(toSuperviewEdge: .left)
         content.autoPinEdge(toSuperviewEdge: .right)
         content.autoPinEdge(toSuperviewMargin: .bottom)
@@ -67,7 +68,7 @@ final class MyController: UIViewController {
     @objc func onButton() {
         self.keyboard.isHidden = !self.keyboard.isHidden
         
-//        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView.collectionViewLayout.invalidateLayout()
         self.view.setNeedsLayout()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()

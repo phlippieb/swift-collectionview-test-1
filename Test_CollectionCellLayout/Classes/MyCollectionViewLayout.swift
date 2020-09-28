@@ -13,10 +13,15 @@ final class MyCollectionViewLayoutFactory {
         let layoutSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1), // Full width
             heightDimension: .estimated(50)) // Dynamic height
+        
         let item = NSCollectionLayoutItem(layoutSize: layoutSize)
         let group = NSCollectionLayoutGroup.vertical(layoutSize: layoutSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         
-        return UICollectionViewCompositionalLayout(section: section)
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.contentInsetsReference = .none
+        
+        let layout = UICollectionViewCompositionalLayout(section: section, configuration: configuration)
+        return layout
     }
 }

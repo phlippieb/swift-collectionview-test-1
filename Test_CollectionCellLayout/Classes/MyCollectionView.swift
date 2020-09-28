@@ -7,13 +7,20 @@
 
 import UIKit
 
+/// Whether to transform the collection view and its cells, so that the items scroll bottom-up.
+let flipped = true
+
 final class MyCollectionView: UICollectionView {
     init() {
         let layout = MyCollectionViewLayoutFactory.make()
         super.init(frame: .zero, collectionViewLayout: layout)
         self.backgroundColor = .clear
-        self.transform = .init(scaleX: 1, y: -1)
-        self.contentInsetAdjustmentBehavior = .never
+        if flipped {
+            self.transform = .init(scaleX: 1, y: -1)
+        }
+        
+        // This breaks things
+//        self.contentInsetAdjustmentBehavior = .never
     }
     
     required init?(coder: NSCoder) {
