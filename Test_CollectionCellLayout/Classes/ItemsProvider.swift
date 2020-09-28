@@ -14,7 +14,7 @@ final class ItemsProvider {
             let heading = LoremIpsum.words(withNumber: headingWordCount)
             
             let bodyWordCount = UInt(5 + arc4random_uniform(20))
-            let body = LoremIpsum.words(withNumber: bodyWordCount)
+            let body = LoremIpsum.words(withNumber: bodyWordCount) + "$"
             
             return Item(
                 heading: heading,

@@ -9,74 +9,44 @@ import UIKit
 import PHBStackLayout
 import PureLayout
 
-class ViewController: UIViewController {
+class ViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.button.setTitle("Toggle keyboard", for: .normal)
-        self.button.backgroundColor = .systemBlue
-        self.button.addTarget(self, action: #selector(onButton), for: .touchUpInside)
-        
-        self.keyboard.attributedText = .init(
-            string: "Keyboard placeholder",
-            attributes: [
-                .font: UIFont.preferredFont(forTextStyle: .title3),
-                .foregroundColor: UIColor.white])
-        self.keyboard.backgroundColor = .systemBlue
-        self.keyboard.textAlignment = .center
-        
-        self.dataSource.bind(to: collectionView)
-        self.dataSource.items = self.itemsProvider.getItems()
-        
-        self.setupLayout2()
+        self.view.backgroundColor = .white
+        self.pushViewController(self.rootController, animated: false)
     }
     
-    /// Setup layout using AutoLayout with anchors
-    private func setupLayout1() {
-        self.view.addSubview(self.button)
-        self.button.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var rootController = AppRootController()
+}
 
-        self.view.addSubview(self.collectionView)
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+/// Shown as the root controller of the app's navigation controller.
+private final class AppRootController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+        self.title = "Root"
         
-        NSLayoutConstraint.activate([
-            self.collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-        ])
+        self.view.addSubview(self.button)
+        self.button.autoCenterInSuperview()
+        self.button.autoSetDimension(.width, toSize: 50)
     }
     
-    /// Setup layout using a stack layout
-    private func setupLayout2() {
-        let content = StackLayout.rows(alignment: .fill, of: [
-            .view(self.collectionView),
-            .view(self.button),
-            .view(self.keyboard)
-        ]).view
-        
-        self.view.addSubview(content)
-        content.autoPinEdge(toSuperviewEdge: .top)
-        content.autoPinEdge(toSuperviewEdge: .left)
-        content.autoPinEdge(toSuperviewEdge: .right)
-        content.autoPinEdge(toSuperviewMargin: .bottom)
-        keyboard.autoSetDimension(.height, toSize: 300)
-        
-        self.keyboard.isHidden = true
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigate()
     }
     
-    @objc func onButton() {
-        self.keyboard.isHidden = !self.keyboard.isHidden
+    private lazy var button: UIButton = {
+        let button = UIButton(primaryAction: .init(handler: { [weak self] _ in
+            self?.navigate()
+        }))
         
-//        self.collectionView.collectionViewLayout.invalidateLayout()
-        self.view.setNeedsLayout()
-        UIView.animate(withDuration: 0.2) {
-            self.view.layoutIfNeeded()
-        }
-    }
+        button.backgroundColor = .systemBlue
+        return button
+    }()
     
-    lazy var collectionView: UICollectionView = MyCollectionView()
-    lazy var button = UIButton()
-    lazy var keyboard = UILabel()
-    lazy var dataSource = MyDataSource()
-    lazy var itemsProvider = ItemsProvider()
+    private func navigate() {
+        let vc = MyController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
